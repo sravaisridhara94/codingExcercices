@@ -1,0 +1,71 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.northwind'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudServicesVersion', "2.2.1.RELEASE")
+	set('springCloudVersion', "Hoxton.SR1")
+}
+
+dependencies {
+
+	// Spring Boot Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.1'
+
+	// Data Access
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.2.4.RELEASE'
+	implementation 'mysql:mysql-connector-java:8.0.19'
+	
+	
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.2.4.RELEASE'
+//	implementation 'mysql:mysql-connector-java:8.0.19'
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+//	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+//	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+//	testImplementation 'org.springframework.security:spring-security-test'
+
+	// Swagger
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+	
+	//Logging
+	implementation 'org.slf4j:jul-to-slf4j:1.7.30' //so tomcat logs use slf4j
+	implementation 'org.slf4j:jcl-over-slf4j:1.7.30' //so common logging (and Spring) uses slf4j
+	implementation 'ch.qos.logback:logback-classic:1.2.3' //actual logging implementation
+	implementation 'org.springframework.amqp:spring-rabbit:2.2.3.RELEASE' //Logback RabbitMQ appender
+	implementation 'ch.qos.logback.contrib:logback-json-classic:0.1.5' //Logback JSON Formatter
+	implementation 'ch.qos.logback.contrib:logback-jackson:0.1.5' //Jackson implementation of Logback JSON Form
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
